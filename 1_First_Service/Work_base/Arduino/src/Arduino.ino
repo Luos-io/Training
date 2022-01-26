@@ -10,16 +10,10 @@ extern "C"
 #include "pipe.h"
 #include "gate.h"
 
-
 #ifdef __cplusplus
 }
 #endif
 
-/******************************************************************************
- * @brief Setup ardiuno
- * @param None
- * @return None
- ******************************************************************************/
 void setup()
 {
     Luos_Init();
@@ -27,11 +21,7 @@ void setup()
     Gate_Init();
     Blinker_Init();
 }
-/******************************************************************************
- * @brief Loop Arduino
- * @param None
- * @return None
- ******************************************************************************/
+
 void loop()
 {
     Luos_Loop();
