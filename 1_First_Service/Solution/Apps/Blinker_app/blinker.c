@@ -53,7 +53,7 @@ void Blinker_Loop(void)
         msg_t led_msg;
 
         // Get the ID of our LED from the routing table
-        id_led = RoutingTB_IDFromAlias("led");
+        id_led = RoutingTB_IDFromType(STATE_TYPE);
 
         if (id_led > 0)
         {
