@@ -1,9 +1,3 @@
-/******************************************************************************
- * @file button
- * @brief driver example a simple button
- * @author Luos
- * @version 0.0.0
- ******************************************************************************/
 #include <Arduino.h>
 #include "button.h"
 
@@ -11,38 +5,9 @@
  * Definitions
  ******************************************************************************/
 #define BTN_PIN 8
-/*******************************************************************************
- * Variables
- ******************************************************************************/
 
 /*******************************************************************************
- * Function
- ******************************************************************************/
-static void Button_MsgHandler(service_t *service, msg_t *msg);
-/******************************************************************************
- * @brief init must be call in project init
- * @param None
- * @return None
- ******************************************************************************/
-void Button_Init(void)
-{
-    revision_t revision = {.major = 1, .minor = 0, .build = 0};
-    pinMode(BTN_PIN, INPUT);
-    Luos_CreateService(Button_MsgHandler, STATE_TYPE, "button", revision);
-}
-/******************************************************************************
- * @brief loop must be call in project loop
- * @param None
- * @return None
- ******************************************************************************/
-void Button_Loop(void)
-{
-}
-/******************************************************************************
- * @brief Msg Handler call back when a msg receive for this service
- * @param Service destination
- * @param Msg receive
- * @return None
+ * Functions
  ******************************************************************************/
 static void Button_MsgHandler(service_t *service, msg_t *msg)
 {
@@ -58,4 +23,15 @@ static void Button_MsgHandler(service_t *service, msg_t *msg)
         Luos_SendMsg(service, &pub_msg);
         return;
     }
+}
+
+void Button_Init(void)
+{
+    revision_t revision = {1, 0, 0};
+    Luos_CreateService(Button_MsgHandler, STATE_TYPE, "button", revision);
+    pinMode(BTN_PIN, INPUT);
+}
+
+void Button_Loop(void)
+{
 }
