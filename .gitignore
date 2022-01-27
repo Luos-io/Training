@@ -50,3 +50,14 @@ modules.order
 Module.symvers
 Mkfile.old
 dkms.conf
+
+# Mac things
+.nosync
+.DS_Store
+**/.DS_Store
+*.icloud
+**/*.icloud
+
+# Platformio things
+.vscode/
+.pio/
