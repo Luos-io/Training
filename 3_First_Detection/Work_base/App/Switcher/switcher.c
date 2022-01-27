@@ -1,42 +1,46 @@
 /******************************************************************************
- * @file button
- * @brief driver example a simple button
+ * @file Switcher
+ * @brief training on detection that turn on the LED when Button is push
  * @author Luos
  * @version 0.0.0
  ******************************************************************************/
 #include <Arduino.h>
-#include "button.h"
+#include "Switcher.h"
 
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define BTN_PIN 8
+typedef enum
+{
+    SWITCHER_APP = LUOS_LAST_TYPE
+} App_type_t;
 /*******************************************************************************
  * Variables
  ******************************************************************************/
+service_t *switcher_app; // This will be our blinker service
 
 /*******************************************************************************
  * Function
  ******************************************************************************/
-static void Button_MsgHandler(service_t *service, msg_t *msg);
+static void Switcher_MsgHandler(service_t *service, msg_t *msg);
 /******************************************************************************
  * @brief init must be call in project init
  * @param None
  * @return None
  ******************************************************************************/
-void Button_Init(void)
+void Switcher_Init(void)
 {
     revision_t revision = {.major = 1, .minor = 0, .build = 0};
-    pinMode(BTN_PIN, INPUT);
-    Luos_CreateService(Button_MsgHandler, STATE_TYPE, "button", revision);
+    switcher_app = Luos_CreateService(Switcher_MsgHandler, SWITCHER_APP, "Switcher", revision);
 }
 /******************************************************************************
  * @brief loop must be call in project loop
  * @param None
  * @return None
  ******************************************************************************/
-void Button_Loop(void)
+void Switcher_Loop(void)
 {
+
 }
 /******************************************************************************
  * @brief Msg Handler call back when a msg receive for this service
@@ -44,18 +48,7 @@ void Button_Loop(void)
  * @param Msg receive
  * @return None
  ******************************************************************************/
-static void Button_MsgHandler(service_t *service, msg_t *msg)
+static void Switcher_MsgHandler(service_t *service, msg_t *msg)
 {
-    if (msg->header.cmd == IO_STATE)
-    {
-        // fill the message infos
-        msg_t pub_msg;
-        pub_msg.header.cmd = IO_STATE;
-        pub_msg.header.target_mode = ID;
-        pub_msg.header.target = msg->header.source;
-        pub_msg.header.size = sizeof(char);
-        pub_msg.data[0] = digitalRead(BTN_PIN);
-        Luos_SendMsg(service, &pub_msg);
-        return;
-    }
+
 }
