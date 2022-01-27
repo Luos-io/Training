@@ -56,7 +56,8 @@ void Switcher_Loop(void)
     msg_t pub_msg;
     if (Luos_IsNodeDetected() == true) // Topology detection Finish
     {
-        if ((LuosHAL_GetSystick() - ActualTime) > 10) // check the loop every 10ms
+        //ask button value every 10ms 
+        if ((LuosHAL_GetSystick() - ActualTime) > 10) 
         {
             ActualTime = LuosHAL_GetSystick();
             if (ID_Button != 0)

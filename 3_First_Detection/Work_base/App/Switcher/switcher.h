@@ -1,5 +1,5 @@
-#ifndef BOOTLOADER_H
-#define BOOTLOADER_H
+#ifndef SWITCHER_H
+#define SWITCHER_H
 
 #include "luos.h"
 
@@ -17,4 +17,4 @@
 void Switcher_Init(void);
 void Switcher_Loop(void);
 
-#endif /* LED_H */
+#endif /* SWITCHER_H */
