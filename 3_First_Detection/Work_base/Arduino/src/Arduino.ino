@@ -7,8 +7,8 @@ extern "C"
 
 #include <luos.h>
 #include "led.h"
-#include "button.h"
-
+//#include "button.h"
+#include "switcher.h"
 
 #ifdef __cplusplus
 }
@@ -23,7 +23,8 @@ void setup()
 {
     Luos_Init();
     Led_Init();
-    Button_Init();
+    // Button_Init();
+    Switcher_Init();
 }
 /******************************************************************************
  * @brief Loop Arduino
@@ -34,5 +35,6 @@ void loop()
 {
     Luos_Loop();
     Led_Loop();
-    Button_Loop();
+    // Button_Loop();
+    Switcher_Loop();
 }

@@ -1,7 +1,7 @@
 {
     "name": "Switcher",
     "keywords": "robus,network,microservice,luos,operating system,os,embedded,communication,service,ST, Arduino",
-    "description": "A simple Luos blinker App.",
+    "description": "A simple Luos switcher App.",
     "version": "1.0.0",
     "authors": {
         "name": "Luos",
