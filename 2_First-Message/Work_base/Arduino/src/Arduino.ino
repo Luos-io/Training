@@ -8,6 +8,7 @@ extern "C"
 #include <luos.h>
 #include "pipe.h"
 #include "gate.h"
+#include "button.h"
 
 
 #ifdef __cplusplus
@@ -24,6 +25,7 @@ void setup()
     Luos_Init();
     Pipe_Init();
     Gate_Init();
+    Button_Init();
 }
 /******************************************************************************
  * @brief Loop Arduino
@@ -35,4 +37,5 @@ void loop()
     Luos_Loop();
     Pipe_Loop();
     Gate_Loop();
+    Button_Loop();
 }
