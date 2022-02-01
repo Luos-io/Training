@@ -28,7 +28,6 @@ void Button_Init(void)
 {
     revision_t revision = {1, 0, 0};
     Luos_CreateService(Button_MsgHandler, STATE_TYPE, "button", revision);
-    pinMode(BTN_PIN, INPUT);
 }
 
 void Button_Loop(void)
