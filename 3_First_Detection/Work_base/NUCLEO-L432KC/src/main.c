@@ -37,7 +37,7 @@ int main(void)
     MX_GPIO_Init();
 
     Luos_Init();
-    SwitcherInit();
+    Switcher_Init();
     Led_Init();
     // Button_Init();
 
