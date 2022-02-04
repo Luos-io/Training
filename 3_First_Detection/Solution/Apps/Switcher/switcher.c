@@ -3,16 +3,14 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-typedef enum
+enum // Custom type list
 {
   SWITCHER_APP = LUOS_LAST_TYPE
-} App_type_t;
+};
 
 /*******************************************************************************
  * Variables
  ******************************************************************************/
-service_t *switcher_app; // This will be our switcher service
-
 uint16_t ID_Led = 0;
 uint16_t ID_Button = 0;
 uint32_t ActualTime;
@@ -45,9 +43,9 @@ void Switcher_MsgHandler(service_t *service, msg_t *msg)
 
 void Switcher_Init(void)
 {
+  service_t *switcher_app; // This will be our switcher service
   revision_t revision = {1, 0, 0};
-  switcher_app = Luos_CreateService(Switcher_MsgHandler, SWITCHER_APP,
-                                    "Switcher", revision);
+  switcher_app = Luos_CreateService(Switcher_MsgHandler, SWITCHER_APP, "Switcher", revision);
   Luos_Detect(switcher_app);
   ActualTime = LuosHAL_GetSystick();
 }
