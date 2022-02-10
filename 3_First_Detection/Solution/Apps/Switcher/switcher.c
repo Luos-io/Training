@@ -11,9 +11,10 @@ enum // Custom type list
 /*******************************************************************************
  * Variables
  ******************************************************************************/
+service_t *switcher_app; // This will be our switcher service
 uint16_t ID_Led = 0;
 uint16_t ID_Button = 0;
-uint32_t ActualTime;
+uint32_t LastAsk;
 
 /*******************************************************************************
  * Functions
@@ -22,18 +23,25 @@ void Switcher_MsgHandler(service_t *service, msg_t *msg)
 {
   if (msg->header.cmd == END_DETECTION)
   {
-    ID_Led = RoutingTB_IDFromAlias("led");
-    ID_Button = RoutingTB_IDFromAlias("button");
+    search_result_t filter_result;
+    RTFilter_Reset(&filter_result);             // Init your filter.
+                                                // Now your filter_result have the entire routing table. #nofilter ;)
+    RTFilter_Alias(&filter_result, "led");      // Filter your filter_result only keep the services with the alias "led"
+    ID_Led = filter_result.result_table[0]->id; // recover the first service ID with alias "led"
+
+    RTFilter_Reset(&filter_result); // Reset your filter.
+    RTFilter_Alias(&filter_result, "button");
+    ID_Button = filter_result.result_table[0]->id;
   }
-  else if ((msg->header.cmd == IO_STATE) &&
-           (msg->header.source == ID_Button))
+  else if ((msg->header.cmd == IO_STATE) && (msg->header.source == ID_Button))
   {
-    if (ID_Led != 0)
+    // Command the led accordingly to the button message
+    if (ID_Led > 0)
     {
       msg_t pub_msg;
       pub_msg.header.cmd = IO_STATE;
       pub_msg.header.target_mode = ID;
-      pub_msg.header.target = ID_Led;
+      pub_msg.header.target = ID_Led; // configure the target to be our led service ID
       pub_msg.header.size = 1;
       pub_msg.data[0] = msg->data[0];
       Luos_SendMsg(switcher_app, &pub_msg);
@@ -43,11 +51,10 @@ void Switcher_MsgHandler(service_t *service, msg_t *msg)
 
 void Switcher_Init(void)
 {
-  service_t *switcher_app; // This will be our switcher service
   revision_t revision = {1, 0, 0};
   switcher_app = Luos_CreateService(Switcher_MsgHandler, SWITCHER_APP, "Switcher", revision);
   Luos_Detect(switcher_app);
-  ActualTime = LuosHAL_GetSystick();
+  LastAsk = LuosHAL_GetSystick();
 }
 
 void Switcher_Loop(void)
@@ -56,9 +63,9 @@ void Switcher_Loop(void)
   if (Luos_IsNodeDetected() == true) // Topology detection Finish
   {
     // ask button value every 10ms
-    if ((Luos_GetSystick() - ActualTime) > 10)
+    if ((Luos_GetSystick() - LastAsk) > 10)
     {
-      ActualTime = LuosHAL_GetSystick();
+      LastAsk = LuosHAL_GetSystick();
       if (ID_Button != 0)
       {
         pub_msg.header.cmd = IO_STATE;
