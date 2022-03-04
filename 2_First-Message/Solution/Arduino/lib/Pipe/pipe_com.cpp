@@ -26,9 +26,7 @@ extern "C"
 /*******************************************************************************
  * Variables
  ******************************************************************************/
-volatile uint8_t is_sending       = false;
-volatile uint16_t size_to_send    = 0;
-volatile uint16_t size_to_receive = 0;
+volatile uint8_t is_sending = false;
 /*******************************************************************************
  * Function
  ******************************************************************************/
@@ -41,9 +39,7 @@ volatile uint16_t size_to_receive = 0;
 void PipeCom_Init(void)
 {
     Serial.begin(1000000);
-    PipeBuffer_Init();
 }
-
 /******************************************************************************
  * @brief init must be call in project init
  * @param None
@@ -65,12 +61,6 @@ void PipeCom_ReceiveP2L(void)
     {
         data = Serial.read();
         Stream_PutSample(get_P2L_StreamChannel(), &data, 1);
-        size_to_receive++;
-        if (data == '\r')
-        {
-            PipeBuffer_AllocP2LTask(size_to_receive);
-            size_to_receive = 0;
-        }
     }
 }
 /******************************************************************************

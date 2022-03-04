@@ -10,7 +10,7 @@
  ******************************************************************************/
 static void Button_MsgHandler(service_t *service, msg_t *msg)
 {
-    if ((msg->header.cmd == IO_STATE) || (msg->header.cmd == GET_CMD))
+    if ((msg->header.cmd == IO_STATE) || (msg->header.cmd == UNKNOW))
     {
         // fill the message infos
         msg_t pub_msg;
