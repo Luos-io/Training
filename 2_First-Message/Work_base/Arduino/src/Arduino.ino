@@ -5,11 +5,10 @@ extern "C"
 {
 #endif
 
-#include <luos.h>
+#include "luos_engine.h"
 #include "pipe.h"
 #include "gate.h"
 #include "button.h"
-
 
 #ifdef __cplusplus
 }

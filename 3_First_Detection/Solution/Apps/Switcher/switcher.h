@@ -1,7 +1,7 @@
 #ifndef SWITCHER_H
 #define SWITCHER_H
 
-#include "luos.h"
+#include "luos_engine.h"
 
 /*******************************************************************************
  * Definitions

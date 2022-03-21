@@ -1,0 +1,96 @@
+name: Dev Build
+
+on:
+  push:
+    branches-ignore:
+      - main
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [macos-latest, windows-latest, ubuntu-latest]
+        include:
+          - os: windows-latest
+            pio_lib_path: D:\a\Luos
+          - os: macos-latest
+            pio_lib_path: ~/work/Luos
+          - os: ubuntu-latest
+            pio_lib_path: ~/work/Luos
+
+    steps:
+      - name: Set up Python
+        uses: actions/setup-python@v1
+        with:
+          python-version: "3.x"
+
+      - name: Set up Node
+        uses: actions/setup-node@v2
+        with:
+          node-version: "14"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install platformio
+          npm install -g clang-format@1.5.0
+
+      - name: Check out getting started repository
+        uses: actions/checkout@v2
+
+      - name: Check for code format
+        if: ${{ runner.os != 'Windows' }}
+        run: python .github/workflows/run-clang-format.py -r .
+
+      - name: Create env repo
+        shell: bash
+        run: |
+          # Save branch name
+          branch_name=$(git branch --show-current)
+          origine_branch_name="origin/${branch_name}"
+          echo current branch name is ${branch_name}
+
+      - name: Run PlatformIO
+        env:
+          PLATFORMIO_LIB_EXTRA_DIRS: ${{ matrix.pio_lib_path }}
+        run: |
+          # 1_First_Service
+          platformio run -d 1_First_Service/Solution/Arduino
+          platformio run -d 1_First_Service/Solution/NUCLEO-F072RB
+          platformio run -d 1_First_Service/Solution/NUCLEO-F401RE
+          platformio run -d 1_First_Service/Solution/NUCLEO-F410RB
+          platformio run -d 1_First_Service/Solution/NUCLEO-G431KB
+          platformio run -d 1_First_Service/Solution/NUCLEO-L432KC
+          platformio run -d 1_First_Service/Work_base/Arduino
+          platformio run -d 1_First_Service/Work_base/NUCLEO-F072RB
+          platformio run -d 1_First_Service/Work_base/NUCLEO-F401RE
+          platformio run -d 1_First_Service/Work_base/NUCLEO-F410RB
+          platformio run -d 1_First_Service/Work_base/NUCLEO-G431KB
+          platformio run -d 1_First_Service/Work_base/NUCLEO-L432KC
+          # 2_First_Message
+          platformio run -d 2_First_Message/Solution/Arduino
+          platformio run -d 2_First_Message/Solution/NUCLEO-F072RB
+          platformio run -d 2_First_Message/Solution/NUCLEO-F401RE
+          platformio run -d 2_First_Message/Solution/NUCLEO-F410RB
+          platformio run -d 2_First_Message/Solution/NUCLEO-G431KB
+          platformio run -d 2_First_Message/Solution/NUCLEO-L432KC
+          platformio run -d 2_First_Message/Work_base/Arduino
+          platformio run -d 2_First_Message/Work_base/NUCLEO-F072RB
+          platformio run -d 2_First_Message/Work_base/NUCLEO-F401RE
+          platformio run -d 2_First_Message/Work_base/NUCLEO-F410RB
+          platformio run -d 2_First_Message/Work_base/NUCLEO-G431KB
+          platformio run -d 2_First_Message/Work_base/NUCLEO-L432KC
+          # 3_First_Detection
+          platformio run -d 3_First_Detection/Solution/Arduino
+          platformio run -d 3_First_Detection/Solution/NUCLEO-F072RB
+          platformio run -d 3_First_Detection/Solution/NUCLEO-F401RE
+          platformio run -d 3_First_Detection/Solution/NUCLEO-F410RB
+          platformio run -d 3_First_Detection/Solution/NUCLEO-G431KB
+          platformio run -d 3_First_Detection/Solution/NUCLEO-L432KC
+          platformio run -d 3_First_Detection/Work_base/Arduino
+          platformio run -d 3_First_Detection/Work_base/NUCLEO-F072RB
+          platformio run -d 3_First_Detection/Work_base/NUCLEO-F401RE
+          platformio run -d 3_First_Detection/Work_base/NUCLEO-F410RB
+          platformio run -d 3_First_Detection/Work_base/NUCLEO-G431KB
+          platformio run -d 3_First_Detection/Work_base/NUCLEO-L432KC
