@@ -24,7 +24,7 @@ void Button_Loop(void)
     msg_t *msg;
     while (Luos_ReadMsg(button_service, &msg) == SUCCEED)
     {
-        if ((msg->header.cmd == IO_STATE) || (msg->header.cmd == UNKNOW))
+        if ((msg->header.cmd == IO_STATE) || (msg->header.cmd == UNKNOWN_CMD))
         {
             // fill the message infos
             msg_t pub_msg;
