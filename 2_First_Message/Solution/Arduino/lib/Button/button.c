@@ -30,7 +30,7 @@ void Button_Loop(void)
             // fill the message infos
             msg_t pub_msg;
             pub_msg.header.cmd         = IO_STATE;
-            pub_msg.header.target_mode = IDACK;
+            pub_msg.header.target_mode = SERVICEIDACK;
             pub_msg.header.target      = msg->header.source;
             pub_msg.header.size        = sizeof(char); // 1 byte
             pub_msg.data[0]            = digitalRead(BTN_PIN);

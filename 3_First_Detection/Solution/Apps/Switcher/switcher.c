@@ -40,7 +40,7 @@ void Switcher_MsgHandler(service_t *service, msg_t *msg)
         {
             msg_t pub_msg;
             pub_msg.header.cmd         = IO_STATE;
-            pub_msg.header.target_mode = ID;
+            pub_msg.header.target_mode = SERVICEID;
             pub_msg.header.target      = ID_Led; // configure the target to be our led service ID
             pub_msg.header.size        = 1;
             pub_msg.data[0]            = msg->data[0];
@@ -69,7 +69,7 @@ void Switcher_Loop(void)
             if (ID_Button != 0)
             {
                 pub_msg.header.cmd         = IO_STATE;
-                pub_msg.header.target_mode = ID;
+                pub_msg.header.target_mode = SERVICEID;
                 pub_msg.header.target      = ID_Button;
                 pub_msg.header.size        = 0;
                 Luos_SendMsg(switcher_app, &pub_msg);
