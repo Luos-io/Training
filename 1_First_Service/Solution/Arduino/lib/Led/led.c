@@ -1,7 +1,7 @@
 #include "led.h"
 #include "Arduino.h"
 
-void Led_MsgHandler(service_t *service, msg_t *msg)
+void Led_MsgHandler(service_t *service, const msg_t *msg)
 {
     if (msg->header.cmd == IO_STATE)
     {

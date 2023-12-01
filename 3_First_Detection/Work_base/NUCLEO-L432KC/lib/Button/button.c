@@ -8,7 +8,7 @@
 /*******************************************************************************
  * Functions
  ******************************************************************************/
-static void Button_MsgHandler(service_t *service, msg_t *msg)
+static void Button_MsgHandler(service_t *service, const msg_t *msg)
 {
     if ((msg->header.cmd == IO_STATE) || (msg->header.cmd == UNKNOWN_CMD))
     {
