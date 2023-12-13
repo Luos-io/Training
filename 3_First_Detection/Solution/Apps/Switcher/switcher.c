@@ -19,7 +19,7 @@ uint32_t LastAsk;
 /*******************************************************************************
  * Functions
  ******************************************************************************/
-void Switcher_MsgHandler(service_t *service, msg_t *msg)
+void Switcher_MsgHandler(service_t *service, const msg_t *msg)
 {
     if (msg->header.cmd == END_DETECTION)
     {
@@ -54,18 +54,18 @@ void Switcher_Init(void)
     revision_t revision = {1, 0, 0};
     switcher_app        = Luos_CreateService(Switcher_MsgHandler, SWITCHER_APP, "Switcher", revision);
     Luos_Detect(switcher_app);
-    LastAsk = LuosHAL_GetSystick();
+    LastAsk = Luos_GetSystick();
 }
 
 void Switcher_Loop(void)
 {
     msg_t pub_msg;
-    if (Luos_IsNodeDetected() == true) // Topology detection Finish
+    if (Luos_IsDetected() == true) // Topology detection Finish
     {
         // ask button value every 10ms
         if ((Luos_GetSystick() - LastAsk) > 10)
         {
-            LastAsk = LuosHAL_GetSystick();
+            LastAsk = Luos_GetSystick();
             if (ID_Button != 0)
             {
                 pub_msg.header.cmd         = IO_STATE;

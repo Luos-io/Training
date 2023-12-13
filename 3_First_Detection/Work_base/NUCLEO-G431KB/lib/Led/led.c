@@ -7,7 +7,7 @@
 #include "led.h"
 #include "gpio.h"
 
-static void Led_MsgHandler(service_t *service, msg_t *msg);
+static void Led_MsgHandler(service_t *service, const msg_t *msg);
 
 void Led_Init(void)
 {
@@ -17,7 +17,7 @@ void Led_Init(void)
 
 void Led_Loop(void) {}
 
-static void Led_MsgHandler(service_t *service, msg_t *msg)
+static void Led_MsgHandler(service_t *service, const msg_t *msg)
 {
     if (msg->header.cmd == IO_STATE)
     {

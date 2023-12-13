@@ -20,7 +20,11 @@
  *   # Usage
  *      This file should be place a the root folder of your project and include
  *      where build flag preprocessor definitions are define in your IDE
- *      -include node_config.h
+ *  
+    -D GATEFORMAT=TinyJSON
+    -DROBUSHAL=?
+    -D PIPEMODE=SERIAL
+    -D PIPEHAL=?
  *
  * @author Luos
  * @version 0.0.0

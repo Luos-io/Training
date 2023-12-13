@@ -15,7 +15,7 @@ enum // Custom type list
 /*******************************************************************************
  * Functions
  ******************************************************************************/
-void Switcher_MsgHandler(service_t *service, msg_t *msg)
+void Switcher_MsgHandler(service_t *service, const msg_t *msg)
 {
 }
 
